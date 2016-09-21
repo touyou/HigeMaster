@@ -7,50 +7,120 @@
 //
 
 import UIKit
+import AVFoundation
 import ProjectOxfordFace
-//import AnyObjectConvertible
-//
-//extension UInt32: AnyObjectConvertible {}
 
 final class ViewController: UIViewController {
-
+    
+    @IBOutlet weak var cameraView: UIView!
+    
+    var input:AVCaptureDeviceInput!
+    var output:AVCaptureStillImageOutput!
+    var session:AVCaptureSession!
+    var camera:AVCaptureDevice!
+    var image: UIImage!
+    var cameraFlag: Bool = true
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        self.navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        setupCamera(AVCaptureDevicePosition.front)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+        
+        // camera stop メモリ解放
+        session.stopRunning()
+        
+        for output in session.outputs {
+            session.removeOutput(output as? AVCaptureOutput)
+        }
+        
+        for input in session.inputs {
+            session.removeInput(input as? AVCaptureInput)
+        }
+        session = nil
+        camera = nil
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "toResultView" {
+            let viewController = segue.destination as! PreviewViewController
+            viewController.image = self.image
+        }
     }
 
+    @IBAction func pushCameraBtn() {
+        if let connection = output.connection(withMediaType: AVMediaTypeVideo) {
+            output.captureStillImageAsynchronously(from: connection, completionHandler: {
+                (imageDataBuffer, error) -> Void in
+                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer)
+                self.image = UIImage(data: imageData!)
+                self.runDetection(self.image)
+                self.performSegue(withIdentifier: "toResultView", sender: nil)
+            })
+        }
+    }
+    
     @IBAction func pushDetectBtn() {
-        let actionSheet = UIAlertController(title: "Select a photo.", message: nil, preferredStyle: .ActionSheet)
+        let actionSheet = UIAlertController(title: "Select a photo.", message: nil, preferredStyle: .actionSheet)
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
 
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .Cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .Default, handler: { action in
-            picker.sourceType = .Camera
-            self.presentViewController(picker, animated: true, completion: nil)
+        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
+        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
+            picker.sourceType = .camera
+            self.present(picker, animated: true, completion: nil)
         }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .Default, handler: { action in
-            picker.sourceType = .PhotoLibrary
-            self.presentViewController(picker, animated: true, completion: nil)
+        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { action in
+            picker.sourceType = .photoLibrary
+            self.present(picker, animated: true, completion: nil)
         }))
 
-        presentViewController(actionSheet, animated: true, completion: nil)
+        present(actionSheet, animated: true, completion: nil)
     }
 
-    func runDetection(image: UIImage) {
+    @IBAction func pushChangeCameraBtn() {
+        // camera stop メモリ解放
+        session.stopRunning()
+        
+        for output in session.outputs {
+            session.removeOutput(output as? AVCaptureOutput)
+        }
+        
+        for input in session.inputs {
+            session.removeInput(input as? AVCaptureInput)
+        }
+        session = nil
+        camera = nil
+        
+        if cameraFlag {
+            setupCamera(AVCaptureDevicePosition.back)
+            cameraFlag = false
+        } else {
+            setupCamera(AVCaptureDevicePosition.front)
+            cameraFlag = true
+        }
+    }
+    
+    func runDetection(_ image: UIImage) {
         let client: MPOFaceServiceClient = MPOFaceServiceClient(subscriptionKey: ProjectOxfordFaceSubscriptionKey)
-        let data: NSData = UIImagePNGRepresentation(image)!
+        let data: Data = UIImagePNGRepresentation(image)!
 
         print("run")
 
-        client.detectWithData(data, returnFaceId: true, returnFaceLandmarks: true, returnFaceAttributes: [NSNumber(unsignedInt: MPOFaceAttributeTypeFacialHair.rawValue)], completionBlock: { collection, error in
-            for face in collection {
+        client.detect(with: data, returnFaceId: true, returnFaceLandmarks: true, returnFaceAttributes: [NSNumber(value: MPOFaceAttributeTypeFacialHair.rawValue as UInt32)], completionBlock: { collection, error in
+            for face in collection! {
                 print("id: \(face.faceId) --------------------------------")
                 print("beard: \(face.attributes.facialHair.beard)")
                 print("sideBurns: \(face.attributes.facialHair.sideburns)")
@@ -58,11 +128,46 @@ final class ViewController: UIViewController {
             }
         })
     }
+    
+    func setupCamera(_ position: AVCaptureDevicePosition) {
+        // カメラのセットアップ
+        session = AVCaptureSession()
+        
+        for captureDevice in AVCaptureDevice.devices() {
+            if (captureDevice as AnyObject).position == position {
+                camera = captureDevice as? AVCaptureDevice
+            }
+        }
+        
+        do {
+            input = try AVCaptureDeviceInput(device: camera) as AVCaptureDeviceInput
+        } catch let error {
+            print(error.localizedDescription)
+        }
+        
+        if session.canAddInput(input) {
+            session.addInput(input)
+        }
+        
+        output = AVCaptureStillImageOutput()
+        if session.canAddOutput(output) {
+            session.addOutput(output)
+        }
+        
+        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer?.frame = cameraView.frame
+        previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
+        cameraView.layer.addSublayer(previewLayer!)
+        session.startRunning()
+    }
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
+        self.image = image
         runDetection(image)
-        picker.dismissViewControllerAnimated(true, completion: nil)
+        picker.dismiss(animated: true, completion: {
+            self.performSegue(withIdentifier: "toResultView", sender: nil)
+        })
     }
 }
