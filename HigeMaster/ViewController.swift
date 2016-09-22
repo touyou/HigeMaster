@@ -65,29 +65,18 @@ final class ViewController: UIViewController {
                 (imageDataBuffer, error) -> Void in
                 let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer)
                 self.image = UIImage(data: imageData!)
-                self.runDetection(self.image)
+                self.cropImage()
                 self.performSegue(withIdentifier: "toResultView", sender: nil)
             })
         }
     }
     
-    @IBAction func pushDetectBtn() {
-        let actionSheet = UIAlertController(title: "Select a photo.", message: nil, preferredStyle: .actionSheet)
+    @IBAction func pushPickerBtn() {
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
-
-        actionSheet.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: nil))
-        actionSheet.addAction(UIAlertAction(title: "Camera", style: .default, handler: { action in
-            picker.sourceType = .camera
-            self.present(picker, animated: true, completion: nil)
-        }))
-        actionSheet.addAction(UIAlertAction(title: "Photo Library", style: .default, handler: { action in
-            picker.sourceType = .photoLibrary
-            self.present(picker, animated: true, completion: nil)
-        }))
-
-        present(actionSheet, animated: true, completion: nil)
+        picker.sourceType = .photoLibrary
+        present(picker, animated: true, completion: nil)
     }
 
     @IBAction func pushChangeCameraBtn() {
@@ -133,6 +122,8 @@ final class ViewController: UIViewController {
         // カメラのセットアップ
         session = AVCaptureSession()
         
+        session.sessionPreset = AVCaptureSessionPresetPhoto
+        
         for captureDevice in AVCaptureDevice.devices() {
             if (captureDevice as AnyObject).position == position {
                 camera = captureDevice as? AVCaptureDevice
@@ -155,10 +146,15 @@ final class ViewController: UIViewController {
         }
         
         let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer?.frame = cameraView.frame
+        previewLayer?.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: self.view.frame.width, height: self.view.frame.width))
         previewLayer?.videoGravity = AVLayerVideoGravityResizeAspectFill
         cameraView.layer.addSublayer(previewLayer!)
         session.startRunning()
+    }
+    
+    func cropImage() {
+        let imgRef = image.cgImage?.cropping(to: CGRect(origin: cameraView.frame.origin, size: CGSize(width: image.size.width, height: image.size.width)))
+        image = UIImage(cgImage: imgRef!, scale: image.scale, orientation: image.imageOrientation)
     }
 }
 
