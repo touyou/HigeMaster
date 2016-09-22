@@ -83,9 +83,15 @@
                             </imageView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XKR-ev-Fms">
                                 <state key="normal" image="back_button"/>
+                                <connections>
+                                    <action selector="pushCancelBtn" destination="7MF-c2-AZc" eventType="touchUpInside" id="VLH-Yu-j9Q"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DD9-zw-Oom">
                                 <state key="normal" image="ok_button"/>
+                                <connections>
+                                    <action selector="pushOkBtn" destination="7MF-c2-AZc" eventType="touchUpInside" id="bYp-Sm-A2D"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" red="0.75294119119644165" green="0.9686274528503418" blue="0.93725490570068359" alpha="1" colorSpace="calibratedRGB"/>

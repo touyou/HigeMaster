@@ -8,7 +8,6 @@
 
 import UIKit
 import AVFoundation
-import ProjectOxfordFace
 
 final class ViewController: UIViewController {
     
@@ -102,22 +101,6 @@ final class ViewController: UIViewController {
         }
     }
     
-    func runDetection(_ image: UIImage) {
-        let client: MPOFaceServiceClient = MPOFaceServiceClient(subscriptionKey: ProjectOxfordFaceSubscriptionKey)
-        let data: Data = UIImagePNGRepresentation(image)!
-
-        print("run")
-
-        client.detect(with: data, returnFaceId: true, returnFaceLandmarks: true, returnFaceAttributes: [NSNumber(value: MPOFaceAttributeTypeFacialHair.rawValue as UInt32)], completionBlock: { collection, error in
-            for face in collection! {
-                print("id: \(face.faceId) --------------------------------")
-                print("beard: \(face.attributes.facialHair.beard)")
-                print("sideBurns: \(face.attributes.facialHair.sideburns)")
-                print("mustache: \(face.attributes.facialHair.mustache)")
-            }
-        })
-    }
-    
     func setupCamera(_ position: AVCaptureDevicePosition) {
         // カメラのセットアップ
         session = AVCaptureSession()
@@ -161,7 +144,6 @@ final class ViewController: UIViewController {
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
         self.image = image
-        runDetection(image)
         picker.dismiss(animated: true, completion: {
             self.performSegue(withIdentifier: "toResultView", sender: nil)
         })
