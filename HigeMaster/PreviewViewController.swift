@@ -9,7 +9,7 @@
 import UIKit
 import ProjectOxfordFace
 
-class PreviewViewController: UIViewController {
+final class PreviewViewController: UIViewController {
     
     @IBOutlet weak var previewImageView: UIImageView!
     
@@ -25,8 +25,8 @@ class PreviewViewController: UIViewController {
             previewImageView.image = image
         }
         
-        self.navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
-        self.navigationItem.hidesBackButton = true
+        navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
+        navigationItem.hidesBackButton = true
         
         indicatorView = UIActivityIndicatorView()
         indicatorView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
@@ -47,8 +47,11 @@ class PreviewViewController: UIViewController {
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "toEditView" {
+            let viewController = segue.destination as! EditViewController
+            viewController.image = self.image
+            viewController.faces = self.faces
+        }
     }
     
     @IBAction func pushOkBtn() {
@@ -57,7 +60,7 @@ class PreviewViewController: UIViewController {
         runDetection(image)
     }
     
-    @IBAction func pushCancelBtn() {
+    @IBAction func pushBackBtn() {
         _ = navigationController?.popViewController(animated: true)
     }
 

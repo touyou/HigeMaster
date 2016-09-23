@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		202C6865317580F6D831AA5E /* Pods_HigeMaster.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 15343FEF4045045C6FE0BCDC /* Pods_HigeMaster.framework */; };
 		46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */; };
+		46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2751D94BA3900D2FA9A /* EditViewController.swift */; };
+		46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */; };
 		46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B931D7C3B8E002F358C /* AppDelegate.swift */; };
 		46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B951D7C3B8E002F358C /* ViewController.swift */; };
 		46FC5B991D7C3B8E002F358C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46FC5B971D7C3B8E002F358C /* Main.storyboard */; };
@@ -21,6 +23,8 @@
 		15343FEF4045045C6FE0BCDC /* Pods_HigeMaster.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_HigeMaster.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		34882757B90751AF0F2B47B6 /* Pods-HigeMaster.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-HigeMaster.debug.xcconfig"; path = "Pods/Target Support Files/Pods-HigeMaster/Pods-HigeMaster.debug.xcconfig"; sourceTree = "<group>"; };
 		46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
+		46ECD2751D94BA3900D2FA9A /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HigeCollectionViewCell.swift; sourceTree = "<group>"; };
 		46FC5B901D7C3B8E002F358C /* HigeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HigeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FC5B931D7C3B8E002F358C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46FC5B951D7C3B8E002F358C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -66,13 +70,15 @@
 			isa = PBXGroup;
 			children = (
 				46FC5B931D7C3B8E002F358C /* AppDelegate.swift */,
-				46FC5B951D7C3B8E002F358C /* ViewController.swift */,
 				46FC5B971D7C3B8E002F358C /* Main.storyboard */,
 				46FC5B9A1D7C3B8E002F358C /* Assets.xcassets */,
 				46FC5B9C1D7C3B8E002F358C /* LaunchScreen.storyboard */,
 				46FC5B9F1D7C3B8E002F358C /* Info.plist */,
 				46FC5BA51D7E4DDB002F358C /* Constant.swift */,
+				46FC5B951D7C3B8E002F358C /* ViewController.swift */,
 				46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */,
+				46ECD2751D94BA3900D2FA9A /* EditViewController.swift */,
+				46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */,
 			);
 			path = HigeMaster;
 			sourceTree = "<group>";
@@ -218,9 +224,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */,
 				46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */,
 				46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */,
 				46FC5BA61D7E4DDB002F358C /* Constant.swift in Sources */,
+				46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */,
 				46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
