@@ -19,6 +19,8 @@ final class EditViewController: UIViewController {
     var faces: [MPOFace]!
     var mode: Int!
     var higeImages: [UIImage]!
+    var autoStampViews = [UIImageView]()
+    var manualStampViews = [UIImageView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -67,9 +69,17 @@ final class EditViewController: UIViewController {
     
     func putStamp() {
         if mode == 0 {
-            
-        } else {
-            
+            for face in faces {
+                print(face)
+                if face.attributes.facialHair.beard.doubleValue > 0 || face.attributes.facialHair.mustache.doubleValue > 0 || face.attributes.facialHair.sideburns.doubleValue > 0 {
+                    let rect = face.faceLandmarks
+                    let newHige = UIImageView(frame: CGRect(x: (rect?.mouthLeft.x.doubleValue)!, y: (rect?.mouthLeft.y.doubleValue)!, width: (rect?.mouthRight.x.doubleValue)!-(rect?.mouthLeft.x.doubleValue)!, height: 20))
+                    newHige.contentMode = .scaleAspectFill
+                    newHige.image = #imageLiteral(resourceName: "hige1")
+                    imageView.addSubview(newHige)
+                    autoStampViews.append(newHige)
+                }
+            }
         }
     }
     
@@ -108,6 +118,14 @@ extension EditViewController: UICollectionViewDelegate, UICollectionViewDataSour
         cell.imageView.image = higeImages[indexPath.row]
         cell.backgroundColor = #colorLiteral(red: 0.9782002568, green: 0.9782230258, blue: 0.9782107472, alpha: 1)
         return cell
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if mode == 0 {
+            for imgView in autoStampViews {
+                imgView.image = higeImages[indexPath.row]
+            }
+        }
     }
     
 }
