@@ -51,12 +51,40 @@ final class EditViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            for imgView in manualStampViews {
+                if imgView.frame.contains(touch.previousLocation(in: imageView)) {
+                    let prev = touch.previousLocation(in: imageView)
+                    let dest = touch.location(in: imageView)
+                    var rect = imgView.frame
+                    rect.origin.x += dest.x - prev.x
+                    rect.origin.y += dest.y - prev.y
+                    imgView.frame = rect
+                    imageView.addSubview(imgView)
+                }
+            }
+        }
+    }
+    
     @IBAction func pushCancelBtn() {
         _ = navigationController?.popToRootViewController(animated: true)
     }
     
     @IBAction func pushShareBtn() {
+        UIGraphicsBeginImageContextWithOptions(imageView.bounds.size, false, 0.0)
+        imageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        let shareImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
         
+        let activityItems = [shareImage]
+        let activityViewCtrl = UIActivityViewController(activityItems: activityItems, applicationActivities: nil)
+        let excludedActivityTypes = [UIActivityType.postToWeibo, UIActivityType.postToTencentWeibo]
+        activityViewCtrl.excludedActivityTypes = excludedActivityTypes
+        // for iPad
+        activityViewCtrl.popoverPresentationController?.sourceView = view
+        activityViewCtrl.popoverPresentationController?.sourceRect = CGRect(x: 0, y: 0, width: 20, height: 20)
+        present(activityViewCtrl, animated: true, completion: nil)
     }
     
     @IBAction func pushAutoBtn() {
@@ -74,6 +102,7 @@ final class EditViewController: UIViewController {
                 if face.attributes.facialHair.beard.doubleValue > 0 || face.attributes.facialHair.mustache.doubleValue > 0 || face.attributes.facialHair.sideburns.doubleValue > 0 {
                     let rect = face.faceLandmarks
                     let newHige = UIImageView(frame: CGRect(x: (rect?.mouthLeft.x.doubleValue)!, y: (rect?.mouthLeft.y.doubleValue)!, width: (rect?.mouthRight.x.doubleValue)!-(rect?.mouthLeft.x.doubleValue)!, height: 20))
+                    
                     newHige.contentMode = .scaleAspectFill
                     newHige.image = #imageLiteral(resourceName: "hige1")
                     imageView.addSubview(newHige)
@@ -125,6 +154,15 @@ extension EditViewController: UICollectionViewDelegate, UICollectionViewDataSour
             for imgView in autoStampViews {
                 imgView.image = higeImages[indexPath.row]
             }
+        } else {
+            let center = imageView.center
+            let newHige = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
+            newHige.image = higeImages[indexPath.row]
+            newHige.contentMode = .scaleAspectFill
+            newHige.isUserInteractionEnabled = true
+            newHige.center = center
+            imageView.addSubview(newHige)
+            manualStampViews.append(newHige)
         }
     }
     

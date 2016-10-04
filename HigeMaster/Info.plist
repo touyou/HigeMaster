@@ -2,6 +2,8 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>This app share pictures.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses pictures.</string>
 	<key>NSCameraUsageDescription</key>
