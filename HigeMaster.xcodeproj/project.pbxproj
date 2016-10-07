@@ -11,6 +11,7 @@
 		46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */; };
 		46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2751D94BA3900D2FA9A /* EditViewController.swift */; };
 		46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */; };
+		46F9F7EB1DA38E2C0057DD72 /* UIImageView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */; };
 		46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B931D7C3B8E002F358C /* AppDelegate.swift */; };
 		46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B951D7C3B8E002F358C /* ViewController.swift */; };
 		46FC5B991D7C3B8E002F358C /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46FC5B971D7C3B8E002F358C /* Main.storyboard */; };
@@ -25,6 +26,7 @@
 		46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		46ECD2751D94BA3900D2FA9A /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HigeCollectionViewCell.swift; sourceTree = "<group>"; };
+		46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Gesture.swift"; sourceTree = "<group>"; };
 		46FC5B901D7C3B8E002F358C /* HigeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HigeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FC5B931D7C3B8E002F358C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		46FC5B951D7C3B8E002F358C /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +81,7 @@
 				46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */,
 				46ECD2751D94BA3900D2FA9A /* EditViewController.swift */,
 				46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */,
+				46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */,
 			);
 			path = HigeMaster;
 			sourceTree = "<group>";
@@ -230,6 +233,7 @@
 				46FC5BA61D7E4DDB002F358C /* Constant.swift in Sources */,
 				46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */,
 				46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */,
+				46F9F7EB1DA38E2C0057DD72 /* UIImageView+Gesture.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -356,6 +360,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.touyou.HigeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -370,6 +375,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.touyou.HigeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 3.0;
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};

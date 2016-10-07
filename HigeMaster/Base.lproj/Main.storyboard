@@ -182,22 +182,26 @@
                                     <action selector="pushAutoBtn" destination="BRc-gc-RyL" eventType="touchUpInside" id="MRx-vf-yYo"/>
                                 </connections>
                             </button>
+                            <slider opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" value="0.5" minValue="0.0" maxValue="1" translatesAutoresizingMaskIntoConstraints="NO" id="0cG-9f-lqh"/>
                         </subviews>
                         <color key="backgroundColor" red="0.75294119119644165" green="0.9686274528503418" blue="0.93725490570068359" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="CkL-rK-0Ui" firstAttribute="leading" secondItem="y7x-Sj-78c" secondAttribute="leading" id="1DX-E8-Mgo"/>
                             <constraint firstAttribute="trailing" secondItem="PWJ-Ek-O7p" secondAttribute="trailing" id="2QA-vh-BzD"/>
+                            <constraint firstAttribute="trailing" secondItem="0cG-9f-lqh" secondAttribute="trailing" id="3B7-lT-wSU"/>
                             <constraint firstItem="CkL-rK-0Ui" firstAttribute="width" secondItem="NVx-Wv-R6z" secondAttribute="width" id="4gn-rh-aWA"/>
                             <constraint firstItem="eQW-He-N3g" firstAttribute="top" secondItem="NVx-Wv-R6z" secondAttribute="bottom" id="7Bf-pO-xGp"/>
                             <constraint firstAttribute="trailing" secondItem="NVx-Wv-R6z" secondAttribute="trailing" id="7nK-ql-c3x"/>
                             <constraint firstItem="2L8-ib-eIA" firstAttribute="width" secondItem="2L8-ib-eIA" secondAttribute="height" multiplier="1:1" id="HUg-1Z-XXn"/>
                             <constraint firstItem="2L8-ib-eIA" firstAttribute="centerX" secondItem="y7x-Sj-78c" secondAttribute="centerX" id="IHw-zV-1w0"/>
+                            <constraint firstItem="NVx-Wv-R6z" firstAttribute="top" secondItem="0cG-9f-lqh" secondAttribute="bottom" id="TEO-44-TLk"/>
                             <constraint firstItem="PWJ-Ek-O7p" firstAttribute="leading" secondItem="y7x-Sj-78c" secondAttribute="leading" id="TWv-hd-IzN"/>
                             <constraint firstItem="PWJ-Ek-O7p" firstAttribute="top" secondItem="2L8-ib-eIA" secondAttribute="bottom" constant="8" id="WlP-xc-0QG"/>
+                            <constraint firstItem="0cG-9f-lqh" firstAttribute="top" secondItem="PWJ-Ek-O7p" secondAttribute="bottom" id="gPs-Wz-s2n"/>
+                            <constraint firstItem="0cG-9f-lqh" firstAttribute="leading" secondItem="y7x-Sj-78c" secondAttribute="leading" id="gyP-xi-hGU"/>
                             <constraint firstItem="NVx-Wv-R6z" firstAttribute="leading" secondItem="CkL-rK-0Ui" secondAttribute="trailing" id="kmt-3n-SQT"/>
                             <constraint firstItem="2L8-ib-eIA" firstAttribute="width" secondItem="y7x-Sj-78c" secondAttribute="width" id="l2D-eg-bfo"/>
                             <constraint firstItem="2L8-ib-eIA" firstAttribute="top" secondItem="Ncp-rs-HA8" secondAttribute="bottom" id="l4f-KD-4DW"/>
-                            <constraint firstItem="NVx-Wv-R6z" firstAttribute="top" secondItem="PWJ-Ek-O7p" secondAttribute="bottom" constant="8" id="qYo-f8-C2r"/>
                             <constraint firstItem="eQW-He-N3g" firstAttribute="top" secondItem="CkL-rK-0Ui" secondAttribute="bottom" id="zoa-o7-Shj"/>
                         </constraints>
                     </view>
@@ -218,6 +222,7 @@
                         <outlet property="collectionView" destination="PWJ-Ek-O7p" id="Cr6-Mg-ccQ"/>
                         <outlet property="imageView" destination="2L8-ib-eIA" id="dWu-Mu-vXq"/>
                         <outlet property="manualBtn" destination="CkL-rK-0Ui" id="Fb0-26-6Xi"/>
+                        <outlet property="sizeSlider" destination="0cG-9f-lqh" id="wd6-fJ-DBI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G3d-jn-ZJx" userLabel="First Responder" sceneMemberID="firstResponder"/>

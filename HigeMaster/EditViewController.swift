@@ -14,8 +14,10 @@ final class EditViewController: UIViewController {
     @IBOutlet weak var imageView: UIImageView!
     @IBOutlet weak var manualBtn: UIButton!
     @IBOutlet weak var autoBtn: UIButton!
+    @IBOutlet weak var sizeSlider: UISlider!
     
     var image: UIImage!
+    var detectImage: UIImage!
     var faces: [MPOFace]!
     var mode: Int!
     var higeImages: [UIImage]!
@@ -36,10 +38,12 @@ final class EditViewController: UIViewController {
         collectionView.delegate = self
         
         if image != nil {
-            imageView.image = image
+            imageView.image = detectImage
         }
         
         higeImages = [#imageLiteral(resourceName: "hige1"), #imageLiteral(resourceName: "hige2"), #imageLiteral(resourceName: "hige3")]
+        
+        initSlider()
         
         setAutoMode()
         
@@ -97,11 +101,19 @@ final class EditViewController: UIViewController {
     
     func putStamp() {
         if mode == 0 {
+//            print(image.size)
+//            print(detectImage.size)
+//            print(imageView.image?.size)
             for face in faces {
-                print(face)
+                print(face.faceId)
+//                let faceTest = UIView(frame: CGRect(x: face.faceRectangle.left.doubleValue/2, y: face.faceRectangle.top.doubleValue/2, width: face.faceRectangle.width.doubleValue, height: face.faceRectangle.height.doubleValue))
+//                print(face.faceRectangle.left)
+//                print(face.faceRectangle.top)
+//                faceTest.backgroundColor = UIColor(colorLiteralRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
+//                imageView.addSubview(faceTest)
                 if face.attributes.facialHair.beard.doubleValue > 0 || face.attributes.facialHair.mustache.doubleValue > 0 || face.attributes.facialHair.sideburns.doubleValue > 0 {
                     let rect = face.faceLandmarks
-                    let newHige = UIImageView(frame: CGRect(x: (rect?.mouthLeft.x.doubleValue)!, y: (rect?.mouthLeft.y.doubleValue)!, width: (rect?.mouthRight.x.doubleValue)!-(rect?.mouthLeft.x.doubleValue)!, height: 20))
+                    let newHige = UIImageView(frame: CGRect(x: (rect?.mouthLeft.x.doubleValue)!/2, y: (rect?.mouthLeft.y.doubleValue)!/2, width: (rect?.mouthRight.x.doubleValue)!-(rect?.mouthLeft.x.doubleValue)!, height: 20))
                     
                     newHige.contentMode = .scaleAspectFill
                     newHige.image = #imageLiteral(resourceName: "hige1")
@@ -117,6 +129,7 @@ final class EditViewController: UIViewController {
         manualBtn.setTitleColor(#colorLiteral(red: 0.2926914692, green: 0.8806881309, blue: 0.5701341033, alpha: 1), for: .normal)
         autoBtn.backgroundColor = #colorLiteral(red: 0.2926914692, green: 0.8806881309, blue: 0.5701341033, alpha: 1)
         autoBtn.setTitleColor(#colorLiteral(red: 0.9782002568, green: 0.9782230258, blue: 0.9782107472, alpha: 1), for: .normal)
+        sizeSlider.value = 0.5
         mode = 0
     }
     
@@ -125,7 +138,30 @@ final class EditViewController: UIViewController {
         manualBtn.setTitleColor(#colorLiteral(red: 0.9782002568, green: 0.9782230258, blue: 0.9782107472, alpha: 1), for: .normal)
         autoBtn.backgroundColor = #colorLiteral(red: 0.9782002568, green: 0.9782230258, blue: 0.9782107472, alpha: 1)
         autoBtn.setTitleColor(#colorLiteral(red: 0.2926914692, green: 0.8806881309, blue: 0.5701341033, alpha: 1), for: .normal)
+        sizeSlider.value = 0.5
         mode = 1
+    }
+    
+    func initSlider() {
+        sizeSlider.maximumValue = 1
+        sizeSlider.minimumValue = 0
+        sizeSlider.value = 0.5
+        sizeSlider.maximumTrackTintColor = #colorLiteral(red: 0.9782002568, green: 0.9782230258, blue: 0.9782107472, alpha: 1)
+        sizeSlider.minimumTrackTintColor = #colorLiteral(red: 0.2926914692, green: 0.8806881309, blue: 0.5701341033, alpha: 1)
+        sizeSlider.addTarget(self, action: #selector(changeSize(sender:)), for: .valueChanged)
+    }
+    
+    func changeSize(sender: UISlider) {
+        let sizeOpe = sender.value * 2.0
+        if mode == 0 {
+            for imgView in autoStampViews {
+                imgView.transform = CGAffineTransform(scaleX: CGFloat(sizeOpe), y: CGFloat(sizeOpe))
+            }
+        } else {
+            for imgView in manualStampViews {
+                imgView.transform = CGAffineTransform(scaleX: CGFloat(sizeOpe), y: CGFloat(sizeOpe))
+            }
+        }
     }
 }
 
@@ -159,8 +195,8 @@ extension EditViewController: UICollectionViewDelegate, UICollectionViewDataSour
             let newHige = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))
             newHige.image = higeImages[indexPath.row]
             newHige.contentMode = .scaleAspectFill
-            newHige.isUserInteractionEnabled = true
             newHige.center = center
+            newHige.isUserInteractionEnabled = true
             imageView.addSubview(newHige)
             manualStampViews.append(newHige)
         }

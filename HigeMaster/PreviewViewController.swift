@@ -15,6 +15,7 @@ final class PreviewViewController: UIViewController {
     
     var indicatorView: UIActivityIndicatorView!
     var image: UIImage!
+    var detectImage: UIImage!
     var faces = [MPOFace]()
 
     override func viewDidLoad() {
@@ -50,6 +51,7 @@ final class PreviewViewController: UIViewController {
         if segue.identifier == "toEditView" {
             let viewController = segue.destination as! EditViewController
             viewController.image = self.image
+            viewController.detectImage = self.detectImage
             viewController.faces = self.faces
         }
     }
@@ -66,7 +68,11 @@ final class PreviewViewController: UIViewController {
 
     func runDetection(_ image: UIImage) {
         let client: MPOFaceServiceClient = MPOFaceServiceClient(subscriptionKey: ProjectOxfordFaceSubscriptionKey)
-        let data: Data = UIImagePNGRepresentation(image)!
+        UIGraphicsBeginImageContextWithOptions(previewImageView.bounds.size, false, 0.0)
+        previewImageView.layer.render(in: UIGraphicsGetCurrentContext()!)
+        detectImage = UIGraphicsGetImageFromCurrentImageContext()!
+        UIGraphicsEndImageContext()
+        let data: Data = UIImagePNGRepresentation(detectImage)!
         
         print("run")
         
