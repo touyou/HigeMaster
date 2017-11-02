@@ -15,17 +15,19 @@
 	<key>CFBundlePackageType</key>
 	<string>APPL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>1.0</string>
+	<string>1.0.1</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.0</string>
+	<string>1.0.1.0</string>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSBluetoothPeripheralUsageDescription</key>
 	<string>This app share pictures.</string>
 	<key>NSCameraUsageDescription</key>
 	<string>This app uses pictures.</string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>This app saves pictures.</string>
 	<key>NSPhotoLibraryUsageDescription</key>
 	<string>This app uses pictures.</string>
 	<key>UILaunchStoryboardName</key>
