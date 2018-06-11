@@ -42,6 +42,50 @@
     self.prepared = YES;
 }
 
+- (NSArray<NSValue *> *)doWorkOnPixelBuffer:(CVImageBufferRef)pixelBuffer {
+
+    if (!self.prepared) {
+        [self prepare];
+    }
+
+    dlib::array2d<dlib::bgr_pixel> img;
+
+    CVPixelBufferLockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
+
+    size_t width = CVPixelBufferGetWidth(pixelBuffer);
+    size_t height = CVPixelBufferGetHeight(pixelBuffer);
+    char *baseBuffer = (char *)CVPixelBufferGetBaseAddress(pixelBuffer);
+
+    img.set_size(height, width);
+    img.reset();
+    long position = 0;
+    while (img.move_next()) {
+        dlib::bgr_pixel& pixel = img.element();
+
+        long bufferLocation = position * 4;
+        char b = baseBuffer[bufferLocation];
+        char g = baseBuffer[bufferLocation + 1];
+        char r = baseBuffer[bufferLocation + 2];
+
+        dlib::bgr_pixel newpixel(b, g, r);
+        pixel = newpixel;
+        position++;
+    }
+
+    CVPixelBufferUnlockBaseAddress(pixelBuffer, kCVPixelBufferLock_ReadOnly);
+
+    dlib::rectangle rect(0, 0, width, height);
+
+    dlib::full_object_detection shape = sp(img, rect);
+
+    NSMutableArray<NSValue *> *facePoints = [NSMutableArray array];
+    for (auto k = 0; k < shape.num_parts(); k++) {
+        [facePoints addObject:[NSValue valueWithCGPoint:CGPointMake(shape.part(k).x(), shape.part(k).y())]];
+    }
+
+    return facePoints;
+}
+
 - (NSArray<NSArray<NSValue *> *> *)doWorkOnSampleBuffer:(CMSampleBufferRef)sampleBuffer inRects:(NSArray<NSValue *> *)rects {
 
     if (!self.prepared) {
@@ -60,6 +104,7 @@
 
     // set_size expects rows, cols format
     img.set_size(height, width);
+//    img.set_size(width, height);
 
     // copy samplebuffer image data into dlib image format
     img.reset();
@@ -67,7 +112,11 @@
     while (img.move_next()) {
         dlib::bgr_pixel& pixel = img.element();
 
+//        size_t row = position / height;
+//        size_t col = position % height;
+
         // assuming bgra format here
+//        long bufferLocation = (col * width + row) * 4;
         long bufferLocation = position * 4;
         char b = baseBuffer[bufferLocation];
         char g = baseBuffer[bufferLocation + 1];
@@ -83,7 +132,7 @@
     CVPixelBufferUnlockBaseAddress(imageBuffer, kCVPixelBufferLock_ReadOnly);
 
     // convert the face bounds list to dlib format
-    std::vector<dlib::rectangle> convertedRectangles = [DlibWrapper convertCGRectValueArray:rects];
+    std::vector<dlib::rectangle> convertedRectangles = [DlibWrapper convertCGRectValueArray:rects width:width height:height];
 
     NSMutableArray *points = [NSMutableArray array];
 
@@ -125,14 +174,18 @@
     return points;
 }
 
-+ (std::vector<dlib::rectangle>)convertCGRectValueArray:(NSArray<NSValue *> *)rects {
++ (std::vector<dlib::rectangle>)convertCGRectValueArray:(NSArray<NSValue *> *)rects width:(size_t)width height:(size_t)height {
     std::vector<dlib::rectangle> myConvertedRects;
     for (NSValue *rectValue in rects) {
         CGRect rect = [rectValue CGRectValue];
-        long left = rect.origin.x;
-        long top = rect.origin.y;
-        long right = left + rect.size.width;
-        long bottom = top + rect.size.height;
+//        long left = rect.origin.x;
+//        long top = rect.origin.y;
+//        long right = left + rect.size.width;
+//        long bottom = top + rect.size.height;
+        long right = height - rect.origin.y;
+        long left = right - rect.size.height;
+        long top = rect.origin.x;
+        long bottom = top + rect.size.width;
         dlib::rectangle dlibRect(left, top, right, bottom);
 
         myConvertedRects.push_back(dlibRect);

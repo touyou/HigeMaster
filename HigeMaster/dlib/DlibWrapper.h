@@ -15,6 +15,7 @@
 
 - (instancetype)init;
 - (NSArray<NSArray<NSValue *> *> *)doWorkOnSampleBuffer:(CMSampleBufferRef)sampleBuffer inRects:(NSArray<NSValue *> *)rects;
+- (NSArray<NSValue *> *)doWorkOnPixelBuffer:(CVImageBufferRef)pixelBuffer;
 - (void)prepare;
 
 @end
