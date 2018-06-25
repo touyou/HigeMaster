@@ -16,23 +16,13 @@
 		460EFF3220D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2A20D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift */; };
 		460EFF3320D28F0B006DDF25 /* NonMaxSuppression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2B20D28F0B006DDF25 /* NonMaxSuppression.swift */; };
 		460EFF3420D28F0B006DDF25 /* MLMultiArray+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2C20D28F0B006DDF25 /* MLMultiArray+Image.swift */; };
-		460EFF3A20D2915E006DDF25 /* dnn_face.mlmodel in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF3920D2915E006DDF25 /* dnn_face.mlmodel */; };
-		46A3C4DE20D257480028DC7B /* DlibTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3C4DC20D257480028DC7B /* DlibTest.storyboard */; };
-		46A3C4E120D2577C0028DC7B /* DNNTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3C4DF20D2577C0028DC7B /* DNNTest.storyboard */; };
-		46A3C4E420D2579E0028DC7B /* VisionTest.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 46A3C4E220D2579E0028DC7B /* VisionTest.storyboard */; };
-		46A3C4E620D257D30028DC7B /* DNNTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4E520D257D30028DC7B /* DNNTestViewController.swift */; };
-		46A3C4E820D257DE0028DC7B /* DlibTestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4E720D257DE0028DC7B /* DlibTestViewController.swift */; };
 		46A3C4EA20D257F30028DC7B /* VisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4E920D257F30028DC7B /* VisionViewController.swift */; };
-		46A3C4EC20D258510028DC7B /* TestManageTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4EB20D258510028DC7B /* TestManageTableViewController.swift */; };
 		46A3C4EE20D25D720028DC7B /* CameraType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4ED20D25D720028DC7B /* CameraType.swift */; };
 		46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */; };
 		46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2751D94BA3900D2FA9A /* EditViewController.swift */; };
 		46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */; };
 		46EDD36720CE0FDA00CD95FD /* libdlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EDD36620CE0FDA00CD95FD /* libdlib.a */; };
-		46EDDC1220CE153800CD95FD /* predictor.dat in Resources */ = {isa = PBXBuildFile; fileRef = 46EDDC1020CE153300CD95FD /* predictor.dat */; };
-		46EDDC1620CE15EF00CD95FD /* DlibWrapper.mm in Sources */ = {isa = PBXBuildFile; fileRef = 46EDDC1520CE15EF00CD95FD /* DlibWrapper.mm */; };
 		46EDE27A20CE227100CD95FD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EDE27920CE227100CD95FD /* Accelerate.framework */; };
-		46EDE27C20CE232900CD95FD /* DlibSessionHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46EDE27B20CE232900CD95FD /* DlibSessionHandler.swift */; };
 		46F9F7EB1DA38E2C0057DD72 /* UIImageView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */; };
 		46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B931D7C3B8E002F358C /* AppDelegate.swift */; };
 		46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B951D7C3B8E002F358C /* ViewController.swift */; };
@@ -304,12 +294,8 @@
 			files = (
 				46FC5B9E1D7C3B8E002F358C /* LaunchScreen.storyboard in Resources */,
 				460EFF2320D27774006DDF25 /* 13653802_1.jpg in Resources */,
-				46A3C4DE20D257480028DC7B /* DlibTest.storyboard in Resources */,
 				46FC5B9B1D7C3B8E002F358C /* Assets.xcassets in Resources */,
-				46A3C4E120D2577C0028DC7B /* DNNTest.storyboard in Resources */,
-				46EDDC1220CE153800CD95FD /* predictor.dat in Resources */,
 				46FC5B991D7C3B8E002F358C /* Main.storyboard in Resources */,
-				46A3C4E420D2579E0028DC7B /* VisionTest.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -320,22 +306,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				46A3C4E820D257DE0028DC7B /* DlibTestViewController.swift in Sources */,
 				46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */,
-				46EDE27C20CE232900CD95FD /* DlibSessionHandler.swift in Sources */,
 				460EFF3320D28F0B006DDF25 /* NonMaxSuppression.swift in Sources */,
 				46A3C4EA20D257F30028DC7B /* VisionViewController.swift in Sources */,
-				46EDDC1620CE15EF00CD95FD /* DlibWrapper.mm in Sources */,
-				46A3C4EC20D258510028DC7B /* TestManageTableViewController.swift in Sources */,
 				46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */,
 				460EFF2E20D28F0B006DDF25 /* UIImage+CVPixelBuffer.swift in Sources */,
 				460EFF2F20D28F0B006DDF25 /* Array.swift in Sources */,
 				46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */,
 				46FC5BA61D7E4DDB002F358C /* Constant.swift in Sources */,
 				460EFF3020D28F0B006DDF25 /* Predictions.swift in Sources */,
-				460EFF3A20D2915E006DDF25 /* dnn_face.mlmodel in Sources */,
 				460EFF3420D28F0B006DDF25 /* MLMultiArray+Image.swift in Sources */,
-				46A3C4E620D257D30028DC7B /* DNNTestViewController.swift in Sources */,
 				46A3C4EE20D25D720028DC7B /* CameraType.swift in Sources */,
 				460EFF3220D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift in Sources */,
 				46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */,

@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Vision
 
 final class EditViewController: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -16,11 +17,11 @@ final class EditViewController: UIViewController {
     @IBOutlet weak var sizeSlider: UISlider!
     
     var image: UIImage!
-    var detectImage: UIImage!
-//    var faces: [MPOFace]!
     var mode: Int!
     var higeImages: [UIImage]!
-    var autoStampViews = [UIImageView]()
+    var selectedHige: UIImage!
+    var sizeRatio: CGFloat = 1.0
+    var autoImageRect = [CGRect]()
     var manualStampViews = [UIImageView]()
 
     override func viewDidLoad() {
@@ -35,12 +36,13 @@ final class EditViewController: UIViewController {
         collectionView.isPagingEnabled = true
         collectionView.dataSource = self
         collectionView.delegate = self
-        
+
         if image != nil {
-            imageView.image = detectImage
+            imageView.image = image
         }
         
         higeImages = [#imageLiteral(resourceName: "hige1"), #imageLiteral(resourceName: "hige2"), #imageLiteral(resourceName: "hige3")]
+        selectedHige = higeImages[0]
         
         initSlider()
         
@@ -99,28 +101,36 @@ final class EditViewController: UIViewController {
     }
     
     func putStamp() {
-//        if mode == 0 {
-//            print(image.size)
-//            print(detectImage.size)
-//            print(imageView.image?.size)
-//            for face in faces {
-//                print(face.faceId)
-//                let faceTest = UIView(frame: CGRect(x: face.faceRectangle.left.doubleValue/2, y: face.faceRectangle.top.doubleValue/2, width: face.faceRectangle.width.doubleValue, height: face.faceRectangle.height.doubleValue))
-//                print(face.faceRectangle.left)
-//                print(face.faceRectangle.top)
-//                faceTest.backgroundColor = UIColor(colorLiteralRed: 1.0, green: 0.0, blue: 0.0, alpha: 0.5)
-//                imageView.addSubview(faceTest)
-//                if face.attributes.facialHair.beard.doubleValue > 0 || face.attributes.facialHair.mustache.doubleValue > 0 || face.attributes.facialHair.sideburns.doubleValue > 0 {
-//                    let rect = face.faceLandmarks
-//                    let newHige = UIImageView(frame: CGRect(x: (rect?.mouthLeft.x.doubleValue)!/2, y: (rect?.mouthLeft.y.doubleValue)!/2, width: (rect?.mouthRight.x.doubleValue)!-(rect?.mouthLeft.x.doubleValue)!, height: 20))
-//
-//                    newHige.contentMode = .scaleAspectFill
-//                    newHige.image = #imageLiteral(resourceName: "hige1")
-//                    imageView.addSubview(newHige)
-//                    autoStampViews.append(newHige)
-//                }
-//            }
-//        }
+        if mode == 0 {
+            detectFaceLandmark()
+        }
+    }
+
+    func detectFaceLandmark() {
+        let request = VNDetectFaceLandmarksRequest { (request, error) in
+            for observation in request.results as! [VNFaceObservation] {
+                self.putHige(observation)
+            }
+        }
+
+        if let cgImage = image.cgImage {
+            try? VNImageRequestHandler(cgImage: cgImage, options: [:]).perform([request])
+        }
+    }
+
+    func putHige(_ observation: VNFaceObservation) {
+        guard let mouse = observation.landmarks?.outerLips else {
+            return
+        }
+        let points = mouse.pointsInImage(imageSize: image.size).map {
+            CGPoint(x: $0.x, y: image.size.height - $0.y)
+        }
+        let width = points[5].x - points[9].x
+        let height = (points[7].y - points[2].y) / 2.0
+        let x = points[2].x
+        let y = points[2].y - height
+        autoImageRect.append(CGRect(x: x, y: y, width: width, height: height))
+        drawAutoImage()
     }
     
     func setAutoMode() {
@@ -153,14 +163,27 @@ final class EditViewController: UIViewController {
     @objc func changeSize(sender: UISlider) {
         let sizeOpe = sender.value * 2.0
         if mode == 0 {
-            for imgView in autoStampViews {
-                imgView.transform = CGAffineTransform(scaleX: CGFloat(sizeOpe), y: CGFloat(sizeOpe))
-            }
+            sizeRatio = CGFloat(sizeOpe)
+            drawAutoImage()
         } else {
             for imgView in manualStampViews {
                 imgView.transform = CGAffineTransform(scaleX: CGFloat(sizeOpe), y: CGFloat(sizeOpe))
             }
         }
+    }
+
+    func drawAutoImage() {
+        let editedImage: UIImage?
+        UIGraphicsBeginImageContextWithOptions(image.size, false, 0.0)
+        image.draw(in: CGRect(x: 0, y: 0, width: image.size.width, height: image.size.height))
+        for rect in autoImageRect {
+            print(rect)
+            selectedHige.draw(in: CGRect(x: rect.origin.x - rect.width * sizeRatio / 2, y: rect.origin.y, width: rect.width * sizeRatio, height: rect.height * sizeRatio))
+        }
+        editedImage = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        self.imageView.image = editedImage
     }
 }
 
@@ -186,9 +209,8 @@ extension EditViewController: UICollectionViewDelegate, UICollectionViewDataSour
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         if mode == 0 {
-            for imgView in autoStampViews {
-                imgView.image = higeImages[indexPath.row]
-            }
+            selectedHige = higeImages[indexPath.row]
+            drawAutoImage()
         } else {
             let center = imageView.center
             let newHige = UIImageView(frame: CGRect(x: 0, y: 0, width: 50, height: 50))

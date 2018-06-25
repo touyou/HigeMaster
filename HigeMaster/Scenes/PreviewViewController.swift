@@ -14,7 +14,7 @@ final class PreviewViewController: UIViewController {
     
     var indicatorView: UIActivityIndicatorView!
     var image: UIImage!
-    var detectImage: UIImage!
+//    var detectImage: UIImage!
 //    var faces = [MPOFace]()
 
     override func viewDidLoad() {
@@ -28,17 +28,17 @@ final class PreviewViewController: UIViewController {
         navigationItem.titleView = UIImageView(image: UIImage(named: "logo"))
         navigationItem.hidesBackButton = true
         
-        indicatorView = UIActivityIndicatorView()
-        indicatorView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
-        indicatorView.center = view.center
-        indicatorView.hidesWhenStopped = false
-        indicatorView.activityIndicatorViewStyle = .whiteLarge
-        indicatorView.backgroundColor = UIColor.gray
-        indicatorView.layer.masksToBounds = true
-        indicatorView.layer.cornerRadius = 5.0
-        indicatorView.layer.opacity = 0.8
-        view.addSubview(indicatorView)
-        indicatorView.isHidden = true
+//        indicatorView = UIActivityIndicatorView()
+//        indicatorView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+//        indicatorView.center = view.center
+//        indicatorView.hidesWhenStopped = false
+//        indicatorView.activityIndicatorViewStyle = .whiteLarge
+//        indicatorView.backgroundColor = UIColor.gray
+//        indicatorView.layer.masksToBounds = true
+//        indicatorView.layer.cornerRadius = 5.0
+//        indicatorView.layer.opacity = 0.8
+//        view.addSubview(indicatorView)
+//        indicatorView.isHidden = true
     }
 
     override func didReceiveMemoryWarning() {
@@ -50,15 +50,16 @@ final class PreviewViewController: UIViewController {
         if segue.identifier == "toEditView" {
             let viewController = segue.destination as! EditViewController
             viewController.image = self.image
-            viewController.detectImage = self.detectImage
+//            viewController.detectImage = self.detectImage
 //            viewController.faces = self.faces
         }
     }
     
     @IBAction func pushOkBtn() {
-        indicatorView.startAnimating()
-        indicatorView.isHidden = false
-        runDetection(image)
+//        indicatorView.startAnimating()
+//        indicatorView.isHidden = false
+        performSegue(withIdentifier: "toEditView", sender: nil)
+//        runDetection(image)
     }
     
     @IBAction func pushBackBtn() {

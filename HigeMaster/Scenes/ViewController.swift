@@ -13,14 +13,12 @@ final class ViewController: UIViewController {
     
     @IBOutlet weak var cameraView: UIView!
     
-    var input:AVCaptureDeviceInput!
-    var output:AVCaptureStillImageOutput!
-    var session:AVCaptureSession!
-    var camera:AVCaptureDevice!
+    var input: AVCaptureDeviceInput!
+    var output: AVCaptureStillImageOutput!
+    var session: AVCaptureSession!
+    var camera: AVCaptureDevice!
     var image: UIImage!
     var cameraFlag: Bool = true
-
-    let sessionHandler = SessionHandler()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -105,45 +103,37 @@ final class ViewController: UIViewController {
     
     func setupCamera(_ position: AVCaptureDevice.Position) {
         // カメラのセットアップ
-        sessionHandler.openSession()
 
-        let layer = sessionHandler.layer
-        layer.frame = cameraView.bounds
+        session = AVCaptureSession()
 
-        cameraView.layer.addSublayer(layer)
+        session.sessionPreset = AVCaptureSession.Preset.photo
 
-        view.layoutIfNeeded()
+        for captureDevice in AVCaptureDevice.devices() {
+            if (captureDevice as AnyObject).position == position {
+                camera = captureDevice
+            }
+        }
 
-//        session = AVCaptureSession()
-//
-//        session.sessionPreset = AVCaptureSession.Preset.photo
-//
-//        for captureDevice in AVCaptureDevice.devices() {
-//            if (captureDevice as AnyObject).position == position {
-//                camera = captureDevice
-//            }
-//        }
-//
-//        do {
-//            input = try AVCaptureDeviceInput(device: camera) as AVCaptureDeviceInput
-//        } catch let error {
-//            print(error.localizedDescription)
-//        }
-//
-//        if session.canAddInput(input) {
-//            session.addInput(input)
-//        }
-//
-//        output = AVCaptureStillImageOutput()
-//        if session.canAddOutput(output) {
-//            session.addOutput(output)
-//        }
-//
-//        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-//        previewLayer.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: self.view.frame.width, height: self.view.frame.width))
-//        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-//        cameraView.layer.addSublayer(previewLayer)
-//        session.startRunning()
+        do {
+            input = try AVCaptureDeviceInput(device: camera) as AVCaptureDeviceInput
+        } catch let error {
+            print(error.localizedDescription)
+        }
+
+        if session.canAddInput(input) {
+            session.addInput(input)
+        }
+
+        output = AVCaptureStillImageOutput()
+        if session.canAddOutput(output) {
+            session.addOutput(output)
+        }
+
+        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
+        previewLayer.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: self.view.frame.width, height: self.view.frame.width))
+        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
+        cameraView.layer.addSublayer(previewLayer)
+        session.startRunning()
     }
     
     func cropImage() {
@@ -153,8 +143,8 @@ final class ViewController: UIViewController {
 }
 
 extension ViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
-    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingImage image: UIImage, editingInfo: [String : AnyObject]?) {
-        self.image = image
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        self.image = info[UIImagePickerControllerEditedImage] as? UIImage
         picker.dismiss(animated: true, completion: {
             self.performSegue(withIdentifier: "toResultView", sender: nil)
         })
