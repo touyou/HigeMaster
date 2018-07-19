@@ -12,13 +12,11 @@ import AVFoundation
 final class ViewController: UIViewController {
     
     @IBOutlet weak var cameraView: UIView!
-    
-    var input: AVCaptureDeviceInput!
-    var output: AVCaptureStillImageOutput!
-    var session: AVCaptureSession!
-    var camera: AVCaptureDevice!
+
+    let session = AVCaptureSession()
+    let cameraHelper = CameraHelper()
     var image: UIImage!
-    var cameraFlag: Bool = true
+    var cameraFlag: Bool = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,12 +28,11 @@ final class ViewController: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        setupCamera(AVCaptureDevice.Position.front)
+        setupCamera(AVCaptureDevice.Position.back)
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
         
         // camera stop メモリ解放
         session.stopRunning()
@@ -47,30 +44,29 @@ final class ViewController: UIViewController {
         for input in session.inputs {
             session.removeInput(input)
         }
-        session = nil
-        camera = nil
     }
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+
         if segue.identifier == "toResultView" {
+
             let viewController = segue.destination as! PreviewViewController
             viewController.image = self.image
         }
     }
 
     @IBAction func pushCameraBtn() {
-        if let connection = output.connection(with: AVMediaType.video) {
-            output.captureStillImageAsynchronously(from: connection, completionHandler: {
-                (imageDataBuffer, error) -> Void in
-                let imageData = AVCaptureStillImageOutput.jpegStillImageNSDataRepresentation(imageDataBuffer!)
-                self.image = UIImage(data: imageData!)
-                self.cropImage()
-                self.performSegue(withIdentifier: "toResultView", sender: nil)
-            })
+
+        cameraHelper.takePhoto { image in
+
+            self.image = image
+            self.cropImage()
+            self.performSegue(withIdentifier: "toResultView", sender: nil)
         }
     }
     
     @IBAction func pushPickerBtn() {
+
         let picker = UIImagePickerController()
         picker.delegate = self
         picker.allowsEditing = true
@@ -80,65 +76,42 @@ final class ViewController: UIViewController {
 
     @IBAction func pushChangeCameraBtn() {
         // camera stop メモリ解放
+
         session.stopRunning()
-        
         for output in session.outputs {
             session.removeOutput(output)
         }
-        
         for input in session.inputs {
             session.removeInput(input)
         }
-        session = nil
-        camera = nil
-        
+
         if cameraFlag {
-            setupCamera(AVCaptureDevice.Position.back)
+            setupCamera(.back)
             cameraFlag = false
         } else {
-            setupCamera(AVCaptureDevice.Position.front)
+            setupCamera(.front)
             cameraFlag = true
         }
     }
     
     func setupCamera(_ position: AVCaptureDevice.Position) {
-        // カメラのセットアップ
 
-        session = AVCaptureSession()
+        let device = cameraHelper.findDevice(position)
 
-        session.sessionPreset = AVCaptureSession.Preset.photo
+        if let videoLayer = cameraHelper.createView(session, device) {
 
-        for captureDevice in AVCaptureDevice.devices() {
-            if (captureDevice as AnyObject).position == position {
-                camera = captureDevice
-            }
+            videoLayer.frame = cameraView.bounds
+            videoLayer.videoGravity = .resizeAspectFill
+            cameraView.layer.addSublayer(videoLayer)
+        } else {
+            fatalError("cannot setup layer")
         }
 
-        do {
-            input = try AVCaptureDeviceInput(device: camera) as AVCaptureDeviceInput
-        } catch let error {
-            print(error.localizedDescription)
-        }
-
-        if session.canAddInput(input) {
-            session.addInput(input)
-        }
-
-        output = AVCaptureStillImageOutput()
-        if session.canAddOutput(output) {
-            session.addOutput(output)
-        }
-
-        let previewLayer = AVCaptureVideoPreviewLayer(session: session)
-        previewLayer.frame = CGRect(origin: self.view.frame.origin, size: CGSize(width: self.view.frame.width, height: self.view.frame.width))
-        previewLayer.videoGravity = AVLayerVideoGravity.resizeAspectFill
-        cameraView.layer.addSublayer(previewLayer)
         session.startRunning()
     }
     
     func cropImage() {
-        let imgRef = image.cgImage?.cropping(to: CGRect(origin: cameraView.frame.origin, size: CGSize(width: image.size.width, height: image.size.width)))
-        image = UIImage(cgImage: imgRef!, scale: image.scale, orientation: image.imageOrientation)
+        image = image.croppingCenterSquare()
     }
 }
 

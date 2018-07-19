@@ -16,12 +16,11 @@
 		460EFF3220D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2A20D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift */; };
 		460EFF3320D28F0B006DDF25 /* NonMaxSuppression.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2B20D28F0B006DDF25 /* NonMaxSuppression.swift */; };
 		460EFF3420D28F0B006DDF25 /* MLMultiArray+Image.swift in Sources */ = {isa = PBXBuildFile; fileRef = 460EFF2C20D28F0B006DDF25 /* MLMultiArray+Image.swift */; };
-		46A3C4EA20D257F30028DC7B /* VisionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4E920D257F30028DC7B /* VisionViewController.swift */; };
+		463C72492100851B00E58CEB /* CameraHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 463C72482100851B00E58CEB /* CameraHelper.swift */; };
 		46A3C4EE20D25D720028DC7B /* CameraType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46A3C4ED20D25D720028DC7B /* CameraType.swift */; };
 		46ECD2571D9249F700D2FA9A /* PreviewViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */; };
 		46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2751D94BA3900D2FA9A /* EditViewController.swift */; };
 		46ECD2791D94C4D700D2FA9A /* HigeCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */; };
-		46EDD36720CE0FDA00CD95FD /* libdlib.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EDD36620CE0FDA00CD95FD /* libdlib.a */; };
 		46EDE27A20CE227100CD95FD /* Accelerate.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 46EDE27920CE227100CD95FD /* Accelerate.framework */; };
 		46F9F7EB1DA38E2C0057DD72 /* UIImageView+Gesture.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */; };
 		46FC5B941D7C3B8E002F358C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46FC5B931D7C3B8E002F358C /* AppDelegate.swift */; };
@@ -42,25 +41,12 @@
 		460EFF2A20D28F0B006DDF25 /* CVPixelBuffer+Helpers.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CVPixelBuffer+Helpers.swift"; sourceTree = "<group>"; };
 		460EFF2B20D28F0B006DDF25 /* NonMaxSuppression.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NonMaxSuppression.swift; sourceTree = "<group>"; };
 		460EFF2C20D28F0B006DDF25 /* MLMultiArray+Image.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "MLMultiArray+Image.swift"; sourceTree = "<group>"; };
-		460EFF3920D2915E006DDF25 /* dnn_face.mlmodel */ = {isa = PBXFileReference; lastKnownFileType = file.mlmodel; path = dnn_face.mlmodel; sourceTree = "<group>"; };
-		46A3C4DD20D257480028DC7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HigeMaster/Assets/Base.lproj/DlibTest.storyboard; sourceTree = "<group>"; };
-		46A3C4E020D2577C0028DC7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HigeMaster/Assets/Base.lproj/DNNTest.storyboard; sourceTree = "<group>"; };
-		46A3C4E320D2579E0028DC7B /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = HigeMaster/Assets/Base.lproj/VisionTest.storyboard; sourceTree = "<group>"; };
-		46A3C4E520D257D30028DC7B /* DNNTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DNNTestViewController.swift; sourceTree = "<group>"; };
-		46A3C4E720D257DE0028DC7B /* DlibTestViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DlibTestViewController.swift; sourceTree = "<group>"; };
-		46A3C4E920D257F30028DC7B /* VisionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisionViewController.swift; sourceTree = "<group>"; };
-		46A3C4EB20D258510028DC7B /* TestManageTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestManageTableViewController.swift; sourceTree = "<group>"; };
+		463C72482100851B00E58CEB /* CameraHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = CameraHelper.swift; path = HigeMaster/Helper/CameraHelper.swift; sourceTree = SOURCE_ROOT; };
 		46A3C4ED20D25D720028DC7B /* CameraType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraType.swift; sourceTree = "<group>"; };
 		46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PreviewViewController.swift; sourceTree = "<group>"; };
 		46ECD2751D94BA3900D2FA9A /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
 		46ECD2781D94C4D700D2FA9A /* HigeCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HigeCollectionViewCell.swift; sourceTree = "<group>"; };
-		46EDD36620CE0FDA00CD95FD /* libdlib.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; path = libdlib.a; sourceTree = "<group>"; };
-		46EDDC1020CE153300CD95FD /* predictor.dat */ = {isa = PBXFileReference; lastKnownFileType = file; path = predictor.dat; sourceTree = "<group>"; };
-		46EDDC1420CE155C00CD95FD /* DlibWrapper.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = DlibWrapper.h; sourceTree = "<group>"; };
-		46EDDC1520CE15EF00CD95FD /* DlibWrapper.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; path = DlibWrapper.mm; sourceTree = "<group>"; };
-		46EDE27820CE1C8800CD95FD /* HigeMaster-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HigeMaster-Bridging-Header.h"; sourceTree = "<group>"; };
 		46EDE27920CE227100CD95FD /* Accelerate.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		46EDE27B20CE232900CD95FD /* DlibSessionHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DlibSessionHandler.swift; sourceTree = "<group>"; };
 		46F9F7EA1DA38E2C0057DD72 /* UIImageView+Gesture.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UIImageView+Gesture.swift"; sourceTree = "<group>"; };
 		46FC5B901D7C3B8E002F358C /* HigeMaster.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HigeMaster.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		46FC5B931D7C3B8E002F358C /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -78,7 +64,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				46EDE27A20CE227100CD95FD /* Accelerate.framework in Frameworks */,
-				46EDD36720CE0FDA00CD95FD /* libdlib.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -100,42 +85,13 @@
 			path = CoreMLHelpers;
 			sourceTree = "<group>";
 		};
-		46A3C4D920D252CA0028DC7B /* DCNN */ = {
-			isa = PBXGroup;
-			children = (
-				460EFF3920D2915E006DDF25 /* dnn_face.mlmodel */,
-			);
-			path = DCNN;
-			sourceTree = "<group>";
-		};
-		46EDD36520CE0FCB00CD95FD /* lib */ = {
-			isa = PBXGroup;
-			children = (
-				46EDD36620CE0FDA00CD95FD /* libdlib.a */,
-			);
-			path = lib;
-			sourceTree = "<group>";
-		};
-		46EDDC0F20CE151500CD95FD /* dlib */ = {
-			isa = PBXGroup;
-			children = (
-				46EDDC1020CE153300CD95FD /* predictor.dat */,
-				46EDDC1420CE155C00CD95FD /* DlibWrapper.h */,
-				46EDDC1520CE15EF00CD95FD /* DlibWrapper.mm */,
-			);
-			path = dlib;
-			sourceTree = "<group>";
-		};
 		46EDE27D20CE232F00CD95FD /* Scenes */ = {
 			isa = PBXGroup;
 			children = (
 				46FC5B951D7C3B8E002F358C /* ViewController.swift */,
+				463C72482100851B00E58CEB /* CameraHelper.swift */,
 				46ECD2561D9249F700D2FA9A /* PreviewViewController.swift */,
 				46ECD2751D94BA3900D2FA9A /* EditViewController.swift */,
-				46A3C4E520D257D30028DC7B /* DNNTestViewController.swift */,
-				46A3C4E720D257DE0028DC7B /* DlibTestViewController.swift */,
-				46A3C4E920D257F30028DC7B /* VisionViewController.swift */,
-				46A3C4EB20D258510028DC7B /* TestManageTableViewController.swift */,
 			);
 			path = Scenes;
 			sourceTree = "<group>";
@@ -151,7 +107,6 @@
 		46EDE27F20CE233D00CD95FD /* Helper */ = {
 			isa = PBXGroup;
 			children = (
-				46EDE27B20CE232900CD95FD /* DlibSessionHandler.swift */,
 				46A3C4ED20D25D720028DC7B /* CameraType.swift */,
 			);
 			path = Helper;
@@ -168,9 +123,6 @@
 		46EDE28120CE237F00CD95FD /* Assets */ = {
 			isa = PBXGroup;
 			children = (
-				46A3C4DF20D2577C0028DC7B /* DNNTest.storyboard */,
-				46A3C4DC20D257480028DC7B /* DlibTest.storyboard */,
-				46A3C4E220D2579E0028DC7B /* VisionTest.storyboard */,
 				46FC5B971D7C3B8E002F358C /* Main.storyboard */,
 				46FC5B9A1D7C3B8E002F358C /* Assets.xcassets */,
 				460EFF2220D27774006DDF25 /* 13653802_1.jpg */,
@@ -192,7 +144,6 @@
 		46FC5B871D7C3B8E002F358C = {
 			isa = PBXGroup;
 			children = (
-				46EDD36520CE0FCB00CD95FD /* lib */,
 				46FC5B921D7C3B8E002F358C /* HigeMaster */,
 				46FC5B911D7C3B8E002F358C /* Products */,
 				5FE182C9D328BAD5AAE7946B /* Frameworks */,
@@ -210,15 +161,12 @@
 		46FC5B921D7C3B8E002F358C /* HigeMaster */ = {
 			isa = PBXGroup;
 			children = (
-				46EDE27820CE1C8800CD95FD /* HigeMaster-Bridging-Header.h */,
 				46EDE28220CE239200CD95FD /* Settings */,
 				46EDE28120CE237F00CD95FD /* Assets */,
 				46EDE28020CE236B00CD95FD /* Views */,
 				46EDE27F20CE233D00CD95FD /* Helper */,
 				46EDE27E20CE233400CD95FD /* Extensions */,
 				46EDE27D20CE232F00CD95FD /* Scenes */,
-				46A3C4D920D252CA0028DC7B /* DCNN */,
-				46EDDC0F20CE151500CD95FD /* dlib */,
 				460EFF2420D28F0B006DDF25 /* CoreMLHelpers */,
 			);
 			path = HigeMaster;
@@ -308,7 +256,7 @@
 			files = (
 				46ECD2761D94BA3900D2FA9A /* EditViewController.swift in Sources */,
 				460EFF3320D28F0B006DDF25 /* NonMaxSuppression.swift in Sources */,
-				46A3C4EA20D257F30028DC7B /* VisionViewController.swift in Sources */,
+				463C72492100851B00E58CEB /* CameraHelper.swift in Sources */,
 				46FC5B961D7C3B8E002F358C /* ViewController.swift in Sources */,
 				460EFF2E20D28F0B006DDF25 /* UIImage+CVPixelBuffer.swift in Sources */,
 				460EFF2F20D28F0B006DDF25 /* Array.swift in Sources */,
@@ -329,30 +277,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		46A3C4DC20D257480028DC7B /* DlibTest.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46A3C4DD20D257480028DC7B /* Base */,
-			);
-			name = DlibTest.storyboard;
-			sourceTree = "<group>";
-		};
-		46A3C4DF20D2577C0028DC7B /* DNNTest.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46A3C4E020D2577C0028DC7B /* Base */,
-			);
-			name = DNNTest.storyboard;
-			sourceTree = "<group>";
-		};
-		46A3C4E220D2579E0028DC7B /* VisionTest.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				46A3C4E320D2579E0028DC7B /* Base */,
-			);
-			name = VisionTest.storyboard;
-			sourceTree = "<group>";
-		};
 		46FC5B971D7C3B8E002F358C /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -500,7 +424,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.touyou.HigeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HigeMaster/HigeMaster-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -529,7 +452,6 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = com.dev.touyou.HigeMaster;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SWIFT_OBJC_BRIDGING_HEADER = "HigeMaster/HigeMaster-Bridging-Header.h";
 				SWIFT_SWIFT3_OBJC_INFERENCE = On;
 				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = 1;
